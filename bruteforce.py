@@ -1,4 +1,6 @@
 import math
+import time as tm
+import timeit
 
 routes = []
 
@@ -11,7 +13,6 @@ def find_paths(node, cities,time, path, distance,distance1):
         distance1 += time[path[-2]][node]
 
     if (len(cities) == len(path)) and (path[0] in cities[path[-1]]):
-        global routes
         path.append(path[0])
         distance += cities[path[-2]][path[0]]
         distance1 += time[path[-2]][path[0]]
@@ -27,28 +28,47 @@ def tezinska_fja(alfa,beta,skal_duzina,skal_vreme):
     return alfa * skal_duzina + beta * skal_vreme
 
 if __name__ == '__main__':
+
+    start_time = tm.time()
+    
+
     cities = {
-        'A' : {'B':5,'C':5,'D':3,'E':2},
-        'B' : {'A':5,'C':5,'D':4,'E':3},
-        'C' : {'A':5,'B':5,'D':3,'E':7},
-        'D' : {'A':3,'B':4,'C':3,'E':7},
-        'E' : {'A':2,'B':3,'C':7,'D':7}
+        'A' : {'B':5,'C':5,'D':3,'E':2,'F':2,'G':1,'I':3,'H':1,'J':7,'K':2},
+        'B' : {'A':5,'C':5,'D':4,'E':3,'F':6,'G':1,'I':4,'H':5,'J':21,'K':9},
+        'C' : {'A':5,'B':5,'D':3,'E':7,'F':5,'G':42,'I':1,'H':6,'J':8,'K':21},
+        'D' : {'A':3,'B':4,'C':3,'E':7,'F':7,'G':17,'I':10,'H':7,'J':6,'K':12},
+        'E' : {'A':2,'B':3,'C':7,'D':7,'F':3,'G':2,'I':11,'H':32,'J':4,'K':7},
+        'F' : {'A':2,'B':6,'C':5,'D':7,'E':3,'G':4,'I':5,'H':1,'J':2,'K':6},
+        'G' : {'A':1,'B':5,'C':10,'D':11,'E':7,'F':14,'I':2,'H':2,'J':1,'K':5},
+        'I' : {'A':3,'B':5,'C':10,'D':11,'E':32,'F':1,'G':2,'H':4,'J':4,'K':4},
+        'H' : {'A':3,'B':5,'C':10,'D':11,'E':32,'F':1,'G':2,'I':3,'J':2,'K':3},
+        'J' : {'A':4,'B':2,'C':5,'D':11,'E':12,'F':12,'G':12,'I':8,'H':3,'K':2},
+        'K' : {'A':4,'B':2,'C':5,'D':11,'E':12,'F':12,'G':12,'I':8,'H':3,'J':2}
     }
 
     time = {
-        'A' : {'B':3,'C':5,'D':4,'E':5},
-        'B' : {'A':3,'C':2,'D':2,'E':5},
-        'C' : {'A':5,'B':2,'D':5,'E':6},
-        'D' : {'A':4,'B':2,'C':5,'E':2},
-        'E' : {'A':5,'B':5,'C':6,'D':2}
+        'A' : {'B':3,'C':5,'D':4,'E':5,'F':2,'G':2,'I':2,'H':9,'J':3,'K':21},
+        'B' : {'A':3,'C':2,'D':2,'E':5,'F':3,'G':1,'I':12,'H':9,'J':2,'K':16},
+        'C' : {'A':5,'B':2,'D':5,'E':6,'F':4,'G':1,'I':5,'H':5,'J':12,'K':23},
+        'D' : {'A':4,'B':2,'C':5,'E':2,'F':5,'G':23,'I':4,'H':21,'J':5,'K':7},
+        'E' : {'A':5,'B':5,'C':6,'D':2,'F':3,'G':1,'I':3,'H':5,'J':2,'K':2},
+        'F' : {'A':2,'B':3,'C':4,'D':5,'E':3,'G':32,'I':2,'H':4,'J':1,'K':8},
+        'G' : {'A':1,'B':5,'C':10,'D':11,'E':7,'F':14,'I':3,'H':3,'J':7,'K':7},
+        'I' : {'A':3,'B':5,'C':10,'D':11,'E':32,'F':1,'G':2,'H':2,'J':5,'K':5},
+        'H' : {'A':13,'B':5,'C':1,'D':3,'E':12,'F':1,'G':2,'I':1,'J':4,'K':3},
+        'J' : {'A':4,'B':2,'C':5,'D':11,'E':12,'F':12,'G':12,'I':8,'H':3,'K':2},
+        'K' : {'A':7,'B':3,'C':5,'D':1,'E':21,'F':2,'G':12,'I':8,'H':3,'J':2}
     }
+
+    
+    
 
     find_paths('A', cities,time, [], 0, 0)
     print("\n")
     print("Velicina svih ruta je: ",len(routes))
     print("distance/time/route")
-    for i in routes:
-        print(i)
+    # for i in routes:
+        # print(i)
     
     sum_dist = 0
     sum_time = 0
@@ -65,10 +85,18 @@ if __name__ == '__main__':
     print("#####################################")
     print("Nove rute:")
     print("duzina/vreme/rute/norm_duzina/norm_vreme/tezinska_fja")
+    k = 0
+    
     for i in sorted(routes,key=lambda route:route[5]):
         print(i)
-    
-    
+        if k == 10:
+            break
+        k+=1
+
+    end_time = tm.time()
+    print(end_time-start_time)
+
+    # print("Vreme izvrsavanja:",time.clock() - start_time," seconds")
     
         
     
