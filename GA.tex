@@ -84,11 +84,11 @@ Ideja zasnovana na idejama iz literature \cite{2} , \cite{3} i \cite{4}
 Da bismo mogli da poredimo rešenja definišimo prvo funkciju cilja za ovaj problem:
 \[ 
   \begin{cases}
-    min \sum_{i=1,j=1}^{n,n} d_i_j ,  \\
-    min \sum_{i=1,j=1}^{n,n} t_i_j\\
+    min \sum_{i,j \in x}^{} d_i_j ,  \\
+    min \sum_{i,j \in x}^{} t_i_j\\
   \end{cases}
 \]
-gde je $d_i_j$ dužina puta od grada $i$ do grada $j$, a $t_i_j$ veme potrebno da se pređe put od grada $i$ do grada $j$.\par
+gde je $d_i_j$ dužina puta od grada $i$ do grada $j$, a $t_i_j$ veme potrebno da se pređe put od grada $i$ do grada $j$ i x jedna permutacija datih gradova.\par
 Sa obzirom na to da je često nemoguće u isto vreme minimizovati obe funkcije, a u cilju podjednakog vrednovanja obe veličine definišimo funkciju cilja na sledeći način
 $$ f(x)=\frac{D_x}{\sum_{i=1}^{m} D_i} + \frac{T_x}{\sum_{i=1}^{m} T_i}$$
 pri čemu je $m$ broj jedinki u generaciji $D_x$ ukupna dužina pređenog puta za rešenje $x$ a $T_x$ ukpno vreme potrebno da se pređe odabrani put $x$.\par
@@ -176,7 +176,22 @@ Distanca& Vreme & Odabran za optimalno\\ \hline
 \end{center}
 \end{table}
 \newpage
-Svi testovi rađeni su na računaru sledećih karakteristika:\\
+\\
+\begin{table}[h!]
+\begin{center}
+\caption{Vreme izvršavanja programa }
+\begin{tabular}{|c|c|c|} \hline
+Broj gradova& Brute Force& Genetski algoritam \\ \hline
+ 10& 3.14 sec& 1.5070 sec\%\\ \hline
+ 11& 31.3 sec& 1.81 sec\%\\ \hline
+\end{tabular}
+\label{tab:tabela3}
+\end{center}
+\end{table}
+
+
+
+Svi testovi( \ref{tab:tabela3})rađeni su na računaru sledećih karakteristika:\\
 Operativni sistem: GNU/Linux\\
 Procesor: Intel i7-6498DU 2.50ghz\\
 Ram memorija: 8GB\\
