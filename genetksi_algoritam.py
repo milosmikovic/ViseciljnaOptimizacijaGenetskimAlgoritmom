@@ -114,69 +114,41 @@ def crossover(parent1,parent2):
     return child
 
 #ukrstanje prvog reda
-def uk_prv_reda(par1,par2):
-    par1_tmp = par1.copy()
-    par2_tmp = par2.copy()
-    
-    #skidamo prvi grad, posle ga dodajemo
-    first_elem = par1_tmp.pop(0)
-    par2_tmp.pop(0)
+def uk_prv_reda(parent1, parent2):
+    position_first = random.randrange(1, len(parent1) - 1)
+    position_second = random.randrange(1, len(parent1) - 1)
 
-    length = len(par1_tmp)
-    start = random.randrange(0,length)
-    end = random.randrange(0,length)
-    start = min(start,end)
-    end = max(start,end)
-    # print("random:",start,end)
-    
+    tmp = max(position_first, position_second)
 
-    chl1 = []
-    chl2 = []
-    for i in range(start,end):
-        chl1.append(par1_tmp[i])
-        chl2.append(par2_tmp[i])
-    
-    #ostatak od roditelja uredjujemo u jednu listu
-    par1_list = []
-    par2_list = []
-    for i in range(end,length):
-        par1_list.append(par1_tmp[i])
-        par2_list.append(par2_tmp[i])
-    for i in range(0,end):
-        par1_list.append(par1_tmp[i])
-        par2_list.append(par2_tmp[i])
+    if tmp == position_first:
+        position_first = position_second
+        position_second = tmp
 
-    #ova promenjiva nam govori koliko trebamo da stavimo na kraj oba deteta
-    on_end = length - end
-    #kada brojac dostigne on_end onda pocinjemo da redjamo na pocetak dece
-    counter = 0
-    #ova lista sluzi da na nju dodajemo elemente na pocetak, posle ih samo obrnemo jer ne mozemo u pravom redosledu da dodajemo...
-    tmp_list = []
+    print(position_first)
+    print(position_second)
 
-    for item in par2_list:
-        if item not in chl1:
-            if counter < on_end:
-                chl1.append(item)
-                counter += 1
-            else:
-                tmp_list.append(item)
-    chl1 = tmp_list + chl1            
+    child1 = make_child(parent1, parent2, position_first, position_second)
+    child2 = make_child(parent2, parent1, position_first, position_second)
 
-    tmp_list = []
-    counter = 0
-    for item in par1_list:
-        if item not in chl2:
-            if counter < on_end:
-                chl2.append(item)
-                counter += 1
-            else:
-                tmp_list.append(item)
-    chl2 = tmp_list + chl2
+    return (child1, child2)
 
-    chl1.insert(0,first_elem)
-    chl2.insert(0,first_elem)
 
-    return chl1,chl2
+def make_child(parent1, parent2, position_first, position_second):
+    subsegment_parent1 = parent1[position_first:position_second + 1]
+    child = [parent1[0]] + ([None] * (len(parent1) - 1))
+    child[position_first:position_second + 1] = subsegment_parent1
+
+    k = position_second + 1
+    for elem in parent2[position_second + 1:] + parent2[1:position_second + 1]:
+        print(k)
+        if (elem not in subsegment_parent1):
+            child[k] = elem
+            k += 1
+            print(child)
+            if k == len(child):
+                k = 1
+
+    return child    
 
 def mutation(chr):
     code = chr.permutation
